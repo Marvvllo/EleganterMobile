@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_edit.xml" value="0.1685185185185185" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_photo.xml" value="0.17760416666666667" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_plus.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_refresh.xml" value="0.1685185185185185" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_search.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/ic_trash.xml" value="0.178125" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/rounded_md.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/rounded_md_gradient.xml" value="0.178125" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/rounded_md_gradient_vertical.xml" value="0.178125" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/text_headline.xml" value="0.178125" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/drawable/top_rounded_md.xml" value="0.178125" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/font/bold_opensans.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/font/bold_raleway.xml" value="0.1921875" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/font/raleway.xml" value="0.4466666666666667" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/font/regular_opensans.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/font/semibold_opensans.xml" value="0.11203703703703703" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_add_furniture.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_edit_furniture.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_show_furniture.xml" value="0.14666666666666667" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/activity_splashe_screen.xml" value="0.16197916666666667" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/layout/furniture_item.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioProjects/Eleganter/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.178125" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

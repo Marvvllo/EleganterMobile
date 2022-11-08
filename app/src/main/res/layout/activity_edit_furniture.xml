@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_700"
+    android:paddingHorizontal="16dp"
+    tools:context=".AddFurnitureActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/bold_raleway"
+        android:text="Add your furniture"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_code"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:hint="Furniture Code"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_700"
+        android:textFontWeight="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:hint="Furniture Name"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_700"
+        android:textFontWeight="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_code" />
+
+    <ImageView
+        android:id="@+id/img_preview"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginVertical="16dp"
+        android:src="@drawable/ic_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_pick_image"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:drawableStart="@drawable/ic_photo"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/blue_700"
+        android:fontFamily="@font/bold_raleway"
+        android:paddingHorizontal="16dp"
+        android:shadowColor="@color/black"
+        android:text="Pick Image"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_preview" />
+
+    <EditText
+        android:id="@+id/et_brand"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:hint="Furniture Brand"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_700"
+        android:textFontWeight="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_pick_image" />
+
+    <EditText
+        android:id="@+id/et_specs"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+
+        android:layout_marginVertical="16dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:hint="Furniture Specifications"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray_700"
+        android:textFontWeight="700"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_brand" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginVertical="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:drawableStart="@drawable/ic_edit"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/blue_700"
+        android:fontFamily="@font/bold_raleway"
+        android:paddingHorizontal="16dp"
+        android:shadowColor="@color/black"
+        android:text="Update"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btn_delete"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_specs" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_delete"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginVertical="16dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_md_gradient"
+        android:drawableStart="@drawable/ic_edit"
+        android:drawablePadding="8dp"
+        android:drawableTint="@color/blue_700"
+        android:fontFamily="@font/bold_raleway"
+        android:paddingHorizontal="16dp"
+        android:shadowColor="@color/black"
+        android:text="Delete"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_submit"
+        app:layout_constraintTop_toBottomOf="@+id/et_specs" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
