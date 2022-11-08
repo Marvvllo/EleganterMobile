@@ -10,6 +10,10 @@ public class Furniture {
         this.specs = specs;
     }
 
+    public Furniture() {
+
+    }
+
     public String getCode() {
         return key;
     }
@@ -36,6 +40,14 @@ public class Furniture {
 
     public String getBrand() {
         return brand;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setBrand(String brand) {

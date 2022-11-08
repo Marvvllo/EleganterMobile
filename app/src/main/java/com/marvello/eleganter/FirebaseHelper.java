@@ -1,14 +1,17 @@
 package com.marvello.eleganter;
 
-import androidx.annotation.NonNull;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseHelper {
 
+    public DatabaseReference getReference() {
+        DatabaseReference database;
+        database = FirebaseDatabase.getInstance("https://eleganter-e0e24-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference();
+        return database;
+    }
 
+    public FirebaseHelper() {
+    }
 }

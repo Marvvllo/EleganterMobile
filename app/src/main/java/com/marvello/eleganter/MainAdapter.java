@@ -22,14 +22,11 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     Context context;
     private SQLiteDatabase DB;
-    private ArrayList<String> codes, names, images, brands;
+    private ArrayList<Furniture> furnitures;
 
-    public MainAdapter(Context context, ArrayList<String> codes, ArrayList<String> names, ArrayList<String> images, ArrayList<String> brands) {
+    public MainAdapter(ArrayList<Furniture> furnitures, Context context) {
         this.context = context;
-        this.codes = codes;
-        this.names = names;
-        this.images = images;
-        this.brands = brands;
+        this.furnitures = furnitures;
     }
 
     @NonNull
@@ -43,26 +40,27 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name = names.get(position);
-        String brand = brands.get(position);
-        Bitmap imageBitmap = new ImageHelper().loadImageFromStorage(images.get(position));
+        final Furniture data = furnitures.get(position);
+        String name = data.getName();
+        String brand = data.getBrand();
+        String imageBitmap = data.getImage();
 
-        if(imageBitmap != null) {
-            holder.getImageView().setImageBitmap(imageBitmap);
-        }
+//        if(imageBitmap != null) {
+//            holder.getImageView().setImageBitmap(imageBitmap);
+//        }
         holder.getNameTV().setText(name);
         holder.getBrandTV().setText(brand);
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ShowFurnitureActivity.class);
-            intent.putExtra("code", codes.get(position));
+//            intent.putExtra("code", codes.get(position));
             context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return names.size();
+        return furnitures.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

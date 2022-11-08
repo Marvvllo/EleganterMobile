@@ -1,5 +1,6 @@
 package com.marvello.eleganter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,6 +14,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -22,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatButton btnAdd;
     private RecyclerView recyclerView;
     private ArrayList<String> codes, names, images, brands;
+    private ArrayList<Furniture> listFurniture;
     public static MainActivity staticMainActivity;
     MainAdapter adapter;
+    DatabaseReference database = new FirebaseHelper().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,37 +78,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayData() {
         recyclerView = findViewById(R.id.rv_main);
-        DataHelper DB = new DataHelper(this);
-        Cursor cursor = null;
-        if (searchQuery.equals("")) {
-            cursor = DB.getAllFurniture();
-        } else {
-            cursor = DB.searchFurniture(searchQuery);
-        }
-        cursor.moveToFirst();
+        database.child("furniture").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listFurniture = new ArrayList<>();
+                for (DataSnapshot item : snapshot.getChildren()) {
+                    Furniture furniture = item.getValue(Furniture.class);
+                    assert furniture != null;
+                    furniture.setKey(item.getKey());
+                    listFurniture.add(furniture);
+                    Toast.makeText(MainActivity.this, furniture.getName(), Toast.LENGTH_SHORT).show();
+                }
+                adapter = new MainAdapter(listFurniture, MainActivity.this);
+                recyclerView.setAdapter(adapter);
+            }
 
-        codes = new ArrayList<String>();
-        names = new ArrayList<String>();
-        images = new ArrayList<String>();
-        brands = new ArrayList<String>();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        for (int position = 0; position < cursor.getCount(); position++) {
-            cursor.moveToPosition(position);
-                codes.add(cursor.getString(0));
-                names.add(cursor.getString(1));
-                images.add(cursor.getString(2));
-                brands.add(cursor.getString(3));
-        }
-        cursor.close();
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        adapter = new MainAdapter(this, codes, names, images, brands);
-
-        // Set adapter to recycler view
-        if(!(names.size() < 1))
-        {
-        recyclerView.setAdapter(adapter);
-        }
+            }
+        });
     }
 
 

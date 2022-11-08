@@ -3,6 +3,7 @@ package com.marvello.eleganter;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -21,12 +22,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AddFurnitureActivity extends AppCompatActivity {
     private EditText etCode, etName, etBrand, etSpecs;
     private AppCompatButton btnPickImage;
     private AppCompatButton btnSubmit;
     private ImageView imgPreview;
     private DataHelper DB;
+
+    DatabaseReference database = new FirebaseHelper().getReference();
 
 //    Database fields
     private String code;
@@ -59,22 +67,40 @@ public class AddFurnitureActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                code = etCode.getText().toString();
                 name = etName.getText().toString();
                 brand = etBrand.getText().toString();
                 specs = etSpecs.getText().toString();
-                String imagePath = new ImageHelper().saveImageToInternalStorage(
-                        getApplicationContext(), imageUri, etCode.getText().toString()
-                );
-                boolean checkInsertData = DB.insertFurniture(code, name, imagePath, brand, specs);
-                if (checkInsertData) {
-                Toast.makeText(getApplicationContext(), "Furniture added successfully", Toast.LENGTH_LONG).show();
+
+                if (name.isEmpty()) {
+                        Toast.makeText(AddFurnitureActivity.this, "Nama kosong"
+                                            , Toast.LENGTH_SHORT).show();
+                } else if (brand.isEmpty()) {
+                        Toast.makeText(AddFurnitureActivity.this, "Brand Kosong"
+                                            , Toast.LENGTH_SHORT).show();
+                } else if (specs.isEmpty()) {
+                        Toast.makeText(AddFurnitureActivity.this, "Specs kosong"
+                                            , Toast.LENGTH_SHORT).show();
                 } else {
-                finish();
-                    Toast.makeText(getApplicationContext(), imagePath, Toast.LENGTH_LONG).show();
+                    Furniture furniture = new Furniture(name, "null", brand, specs);
+
+                    database.child("furniture").push().setValue(furniture)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(AddFurnitureActivity.this, "Data Berhasil Disimpan"
+                                            , Toast.LENGTH_SHORT).show();
+
+                                    startActivity(new Intent(AddFurnitureActivity.this, MainActivity.class));
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddFurnitureActivity.this, "Gagal Menyimpan"
+                                    , Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-                MainActivity.staticMainActivity.displayData();
-                finish();
             }
         });
 
