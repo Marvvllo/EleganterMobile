@@ -78,4 +78,10 @@ public class ImageHelper {
         return null;
 
     }
+
+    public String getFileName(Uri uri) {
+        String[] path = uri.toString().split("%2F");
+        return path[path.length - 1];
+    }
+
 }

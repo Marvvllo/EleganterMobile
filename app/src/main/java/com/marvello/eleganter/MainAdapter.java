@@ -12,16 +12,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     Context context;
-    private SQLiteDatabase DB;
     private ArrayList<Furniture> furnitures;
 
     public MainAdapter(ArrayList<Furniture> furnitures, Context context) {
@@ -43,11 +48,22 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         final Furniture data = furnitures.get(position);
         String name = data.getName();
         String brand = data.getBrand();
-        String imageBitmap = data.getImage();
+        String image = data.getImage();
 
-//        if(imageBitmap != null) {
-//            holder.getImageView().setImageBitmap(imageBitmap);
-//        }
+        Toast.makeText(context, name + brand, Toast.LENGTH_SHORT).show();
+
+        StorageReference storageRef = new FirebaseHelper().getStorage();
+        storageRef.child(data.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri.toString()).into(holder.getImageView());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
         holder.getNameTV().setText(name);
         holder.getBrandTV().setText(brand);
 

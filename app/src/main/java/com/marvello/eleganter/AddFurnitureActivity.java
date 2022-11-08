@@ -8,36 +8,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
 
 public class AddFurnitureActivity extends AppCompatActivity {
     private EditText etCode, etName, etBrand, etSpecs;
     private AppCompatButton btnPickImage;
     private AppCompatButton btnSubmit;
     private ImageView imgPreview;
-    private DataHelper DB;
 
-    DatabaseReference database = new FirebaseHelper().getReference();
+    DatabaseReference database = new FirebaseHelper().getDatabase();
+    StorageReference storageRef = new FirebaseHelper().getStorage();
 
-//    Database fields
-    private String code;
+
+    //    Database fields
     private String name;
     private Uri imageUri;
     private String brand;
@@ -48,9 +41,6 @@ public class AddFurnitureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_furniture);
 
-        DB = new DataHelper(this);
-
-        etCode = findViewById(R.id.et_code);
         etName = findViewById(R.id.et_name);
         etBrand = findViewById(R.id.et_brand);
         etSpecs = findViewById(R.id.et_specs);
@@ -81,7 +71,9 @@ public class AddFurnitureActivity extends AppCompatActivity {
                         Toast.makeText(AddFurnitureActivity.this, "Specs kosong"
                                             , Toast.LENGTH_SHORT).show();
                 } else {
-                    Furniture furniture = new Furniture(name, "null", brand, specs);
+                    String imageFileName = new ImageHelper().getFileName(imageUri);
+
+                    Furniture furniture = new Furniture(name, "images/"+imageFileName, brand, specs);
 
                     database.child("furniture").push().setValue(furniture)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -89,6 +81,10 @@ public class AddFurnitureActivity extends AppCompatActivity {
                                 public void onSuccess(Void unused) {
                                     Toast.makeText(AddFurnitureActivity.this, "Data Berhasil Disimpan"
                                             , Toast.LENGTH_SHORT).show();
+
+                                    StorageReference imageRef = storageRef.child("images/" + imageFileName);
+                                    Object uploadTask = imageRef.putFile(imageUri);
+
 
                                     startActivity(new Intent(AddFurnitureActivity.this, MainActivity.class));
                                     finish();
