@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "287819110069",
+    "project_id": "eleganter-e0e24",
+    "storage_bucket": "eleganter-e0e24.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287819110069:android:4f3c9792176061861ad0fc",
+        "android_client_info": {
+          "package_name": "com.marvello.eleganter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287819110069-o5kok1oeqraeqtpmgh6nhc7q9ff4tjue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtqhgF1k-RVjx9VV9d_JhHKb2gAXgeycQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287819110069-o5kok1oeqraeqtpmgh6nhc7q9ff4tjue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
