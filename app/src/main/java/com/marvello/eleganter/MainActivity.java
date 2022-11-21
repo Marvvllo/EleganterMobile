@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void displayData() {
         recyclerView = findViewById(R.id.rv_main);
+
+        if (searchQuery.isEmpty()) {
         database.child("furniture").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -92,6 +94,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        } else {
+            database.child("furniture").orderByChild("name").startAt(searchQuery)
+                    .endAt(searchQuery+"\uf8ff").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            listFurniture = new ArrayList<Furniture>();
+                            for (DataSnapshot item : snapshot.getChildren()) {
+                                Furniture furniture = item.getValue(Furniture.class);
+                                assert furniture != null;
+                                furniture.setKey(item.getKey());
+                                listFurniture.add(furniture);
+                            }
+                            adapter = new MainAdapter(listFurniture, MainActivity.this);
+                            recyclerView.setAdapter(adapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
+
     }
 
 
