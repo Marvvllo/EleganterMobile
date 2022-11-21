@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                     assert furniture != null;
                     furniture.setKey(item.getKey());
                     listFurniture.add(furniture);
-                    Toast.makeText(MainActivity.this, furniture.getName(), Toast.LENGTH_SHORT).show();
                 }
                 adapter = new MainAdapter(listFurniture, MainActivity.this);
                 recyclerView.setAdapter(adapter);
