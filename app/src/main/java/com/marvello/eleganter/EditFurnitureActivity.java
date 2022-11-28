@@ -63,7 +63,6 @@ public class EditFurnitureActivity extends AppCompatActivity {
                     etBrand.setText(furniture.getBrand());
                     etSpecs.setText(furniture.getSpecs());
 
-                    StorageReference storageRef = new FirebaseHelper().getStorage();
                     storageRef.child(furniture.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -143,10 +142,27 @@ public class EditFurnitureActivity extends AppCompatActivity {
                         case 0:
                             startActivity(new Intent(EditFurnitureActivity.this, MainActivity.class));
                             finish();
+
+                            database.child("furniture").child(key).child("image").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String imagePath = snapshot.getValue(String.class);
+                                    if(imagePath != null) {
+                                        storageRef.child(imagePath).delete();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
                             database.child("furniture").child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
-
                                     Toast.makeText(EditFurnitureActivity.this, "Data berhasil Dihapus", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -155,6 +171,9 @@ public class EditFurnitureActivity extends AppCompatActivity {
                                     Toast.makeText(EditFurnitureActivity.this, "Gagal menghapus data", Toast.LENGTH_SHORT).show();
                                 }
                             });
+
+
+
                             break;
                         case 1:
                             break;
