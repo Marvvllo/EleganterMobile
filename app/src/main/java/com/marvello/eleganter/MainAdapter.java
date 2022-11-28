@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,13 +52,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         String brand = data.getBrand();
         String image = data.getImage();
 
-        Toast.makeText(context, name + brand, Toast.LENGTH_SHORT).show();
-
         StorageReference storageRef = new FirebaseHelper().getStorage();
         storageRef.child(data.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Picasso.get().load(uri.toString()).into(holder.getImageView());
+                Picasso.get().load(uri.toString())
+                        .into(holder.getImageView());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -69,7 +70,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(context, ShowFurnitureActivity.class);
-//            intent.putExtra("code", codes.get(position));
+            intent.putExtra("key", data.getKey());
             context.startActivity(intent);
         });
     }

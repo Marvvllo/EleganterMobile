@@ -103,16 +103,13 @@ public class AddFurnitureActivity extends AppCompatActivity {
     }
 
     ActivityResultLauncher<String> pickImage = registerForActivityResult(new ActivityResultContracts.GetContent(),
-            new ActivityResultCallback<Uri>() {
-                @Override
-                public void onActivityResult(Uri uri) {
-                    // Handle the returned Uri
-                    imageUri = uri;
-                    imgPreview = findViewById(R.id.img_preview);
-                    imgPreview.setImageURI(uri);
-                }
-            });
-
-
-
+        new ActivityResultCallback<Uri>() {
+            @Override
+            public void onActivityResult(Uri uri) {
+                // Handle the returned Uri
+                imageUri = uri;
+                imgPreview = findViewById(R.id.img_preview);
+                imgPreview.setImageURI(uri);
+            }
+        });
 }
