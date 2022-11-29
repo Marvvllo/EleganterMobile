@@ -27,8 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.util.Objects;
-
 public class EditFurnitureActivity extends AppCompatActivity {
     private EditText etName, etBrand, etSpecs;
     private AppCompatButton btnPickImage;
@@ -60,7 +58,7 @@ public class EditFurnitureActivity extends AppCompatActivity {
                 Furniture furniture = snapshot.getValue(Furniture.class);
                 if (furniture != null) {
                     etName.setText(furniture.getName());
-                    etBrand.setText(furniture.getBrand());
+                    etBrand.setText(furniture.getSeller());
                     etSpecs.setText(furniture.getSpecs());
 
                     storageRef.child(furniture.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

@@ -17,11 +17,18 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Objects;
+
 public class AddFurnitureActivity extends AppCompatActivity {
-    private EditText etCode, etName, etBrand, etSpecs;
+    private EditText etName, etSpecs;
     private AppCompatButton btnPickImage;
     private AppCompatButton btnSubmit;
     private ImageView imgPreview;
@@ -33,7 +40,8 @@ public class AddFurnitureActivity extends AppCompatActivity {
     //    Database fields
     private String name;
     private Uri imageUri;
-    private String brand;
+    private Seller seller;
+    private String sellerName;
     private String specs;
 
     @Override
@@ -42,7 +50,6 @@ public class AddFurnitureActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_furniture);
 
         etName = findViewById(R.id.et_name);
-        etBrand = findViewById(R.id.et_brand);
         etSpecs = findViewById(R.id.et_specs);
         btnPickImage = findViewById(R.id.btn_pick_image);
         btnSubmit = findViewById(R.id.btn_submit);
@@ -58,14 +65,10 @@ public class AddFurnitureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name = etName.getText().toString();
-                brand = etBrand.getText().toString();
                 specs = etSpecs.getText().toString();
 
                 if (name.isEmpty()) {
                         Toast.makeText(AddFurnitureActivity.this, "Nama kosong"
-                                            , Toast.LENGTH_SHORT).show();
-                } else if (brand.isEmpty()) {
-                        Toast.makeText(AddFurnitureActivity.this, "Brand Kosong"
                                             , Toast.LENGTH_SHORT).show();
                 } else if (specs.isEmpty()) {
                         Toast.makeText(AddFurnitureActivity.this, "Specs kosong"
@@ -73,29 +76,58 @@ public class AddFurnitureActivity extends AppCompatActivity {
                 } else {
                     String imageFileName = new ImageHelper().getFileName(imageUri);
 
-                    Furniture furniture = new Furniture(name, "images/"+imageFileName, brand, specs);
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    database.child("furniture").push().setValue(furniture)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                    if (user != null) {
+
+                    Toast.makeText(AddFurnitureActivity.this, user.getUid(), Toast.LENGTH_SHORT).show();
+                    database.child("seller").addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(AddFurnitureActivity.this, "Data Berhasil Disimpan"
-                                            , Toast.LENGTH_SHORT).show();
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot item : snapshot.getChildren()) {
+                                        seller = item.getValue(Seller.class);
+                                        if (Objects.equals(seller.getId(), user.getUid()))
+                                        {
+                                            sellerName = seller.getName();
 
-                                    StorageReference imageRef = storageRef.child("images/" + imageFileName);
-                                    Object uploadTask = imageRef.putFile(imageUri);
+                                            Furniture furniture = new Furniture(name, "images/"+imageFileName, sellerName, specs);
+
+                                            database.child("furniture").push().setValue(furniture)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(AddFurnitureActivity.this, "Data Berhasil Disimpan"
+                                                                    , Toast.LENGTH_SHORT).show();
+
+                                                            StorageReference imageRef = storageRef.child("images/" + imageFileName);
+                                                            Object uploadTask = imageRef.putFile(imageUri);
 
 
-                                    startActivity(new Intent(AddFurnitureActivity.this, MainActivity.class));
-                                    finish();
+                                                            startActivity(new Intent(AddFurnitureActivity.this, MainActivity.class));
+                                                            finish();
+                                                        }
+                                                    }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Toast.makeText(AddFurnitureActivity.this, "Gagal Menyimpan"
+                                                                    , Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                        }
+                                    }
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddFurnitureActivity.this, "Gagal Menyimpan"
-                                    , Toast.LENGTH_SHORT).show();
-                        }
-                    });
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+                    } else {
+                        Toast.makeText(AddFurnitureActivity.this, "Please login to add a furniture.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
