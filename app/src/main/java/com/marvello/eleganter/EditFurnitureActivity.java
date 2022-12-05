@@ -34,7 +34,7 @@ public class EditFurnitureActivity extends AppCompatActivity {
     private ImageView imgPreview;
 
     //    Database fields
-    private String key, name, brand, specs, imagePath;
+    private String key, name, seller, specs, imagePath;
     private Uri imageUri;
 
     DatabaseReference database = new FirebaseHelper().getDatabase();
@@ -47,6 +47,7 @@ public class EditFurnitureActivity extends AppCompatActivity {
 
         etName = findViewById(R.id.et_name);
         etBrand = findViewById(R.id.et_brand);
+        etBrand.setEnabled(false);
         etSpecs = findViewById(R.id.et_specs);
         imgPreview = findViewById(R.id.img_preview);
 
@@ -102,21 +103,20 @@ public class EditFurnitureActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 name = etName.getText().toString();
-                brand = etBrand.getText().toString();
+                seller = etBrand.getText().toString();
                 specs = etSpecs.getText().toString();
                 if (imageUri != null) {
                     StorageReference imageRef = storageRef.child(imagePath);
                     Object uploadTask = imageRef.putFile(imageUri);
                 }
 
-                database.child("furniture").child(key).setValue(new Furniture(name, imagePath, brand, specs)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                database.child("furniture").child(key).setValue(new Furniture(name, imagePath, seller, specs)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         MainActivity.staticMainActivity.displayData();
 
                         startActivity(new Intent(EditFurnitureActivity.this, MainActivity.class));
                         finish();
-                        Toast.makeText(view.getContext(), name + imagePath + brand + specs, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

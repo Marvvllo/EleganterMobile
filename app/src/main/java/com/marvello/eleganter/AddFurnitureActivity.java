@@ -80,8 +80,6 @@ public class AddFurnitureActivity extends AppCompatActivity {
 
 
                     if (user != null) {
-
-                    Toast.makeText(AddFurnitureActivity.this, user.getUid(), Toast.LENGTH_SHORT).show();
                     database.child("seller").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
