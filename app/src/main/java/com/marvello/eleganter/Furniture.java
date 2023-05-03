@@ -1,12 +1,12 @@
 package com.marvello.eleganter;
 
 public class Furniture {
-    public String key, name, image, brand, specs;
+    public String key, name, image, seller, specs;
 
-    public Furniture(String name, String image, String brand, String specs) {
+    public Furniture(String name, String image, String seller, String specs) {
         this.name = name;
         this.image = image;
-        this.brand = brand;
+        this.seller = seller;
         this.specs = specs;
     }
 
@@ -38,8 +38,8 @@ public class Furniture {
         this.image = image;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getSeller() {
+        return seller;
     }
 
     public String getKey() {
@@ -50,8 +50,8 @@ public class Furniture {
         this.key = key;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 
     public String getSpecs() {

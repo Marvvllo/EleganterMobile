@@ -1,17 +1,12 @@
 package com.marvello.eleganter;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +45,7 @@ public class ShowFurnitureActivity extends AppCompatActivity {
                 Furniture furniture = snapshot.getValue(Furniture.class);
                 if (furniture != null) {
                     tvName.setText(furniture.getName());
-                    tvBrand.setText(furniture.getBrand());
+                    tvBrand.setText(furniture.getSeller());
                     tvSpecs.setText(furniture.getSpecs());
 
                     StorageReference storageRef = new FirebaseHelper().getStorage();
