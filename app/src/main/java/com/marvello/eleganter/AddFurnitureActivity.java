@@ -26,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class AddFurnitureActivity extends AppCompatActivity {
     private EditText etName, etSpecs;
@@ -74,7 +75,7 @@ public class AddFurnitureActivity extends AppCompatActivity {
                         Toast.makeText(AddFurnitureActivity.this, "Specs kosong"
                                             , Toast.LENGTH_SHORT).show();
                 } else {
-                    String imageFileName = new ImageHelper().getFileName(imageUri);
+                    String imageFileName = UUID.randomUUID().toString() + ".png";
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
